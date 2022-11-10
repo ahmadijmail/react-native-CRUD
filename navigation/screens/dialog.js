@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, View, Image } from "react-native";
+import { Button, StyleSheet, View, Image, Pressable,Text } from "react-native";
 import Dialog from "react-native-dialog";
 import axios from "axios";
 import ImagePickerExample from "./imageUploader";
@@ -36,7 +36,9 @@ export default function Ddialog({ item }) {
 
   return (
     <View style={styles.container}>
-      <Button title="update" color onPress={update} />
+      <Pressable  style={styles.buttonup} onPress={update} >
+        <Text style={{ color: "white" }}>Update</Text>
+      </Pressable>
       <Dialog.Container visible={visible}>
         <Dialog.Title>Update Product</Dialog.Title>
         <Dialog.Input
@@ -88,10 +90,10 @@ const styles = StyleSheet.create({
   container: {
     //  flex: 1,
     // backgroundColor: "blue",
-    color: "white",
-    width: "30%",
-    left: "70%",
-    bottom: "30%",
+   // color: "white",
+    //width: "30%",
+    //left: "70%",
+   // bottom: "30%",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -100,4 +102,15 @@ const styles = StyleSheet.create({
   imgg: {
     marginLeft: "20%",
   },
+
+  buttonup:{
+    width: 70,
+    height: "41%",
+    justifyContent:'center',
+    backgroundColor: "black",
+    borderRadius: 10,
+    alignItems: "center",
+    marginLeft: "77%",
+    bottom: "73%",
+  }
 });

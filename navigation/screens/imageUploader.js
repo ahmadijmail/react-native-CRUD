@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Image, View, Platform, StyleSheet,ActivityIndicator } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { ScrollView, TextInput } from "native-base";
 export default function ImagePickerExample({ setImage ,oldimage}) {
   const [imgggg, setimgg]=useState(oldimage)
   const [image, setImages] = useState();
@@ -54,13 +53,13 @@ export default function ImagePickerExample({ setImage ,oldimage}) {
       <View style={styles.button}>
         <Button
           style={styles.buttonInner}
-          color
+          //color="#000000"
           title="Upload Image"
           onPress={pickImage}
         />
       </View>
    
-      {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
+      {isLoading&& <ActivityIndicator size="large"  style={{right:'65%'}}/>}
       {imgggg && <Image source={image?{uri:image}: {uri:imgggg}} style={styles.image} />}
     </View>
   );
@@ -78,7 +77,8 @@ const styles = StyleSheet.create({
     width: 150,
     right: 70,
     bottom: 50,
-    backgroundColor: "#F0F8FF",
+    //color:'black',
+  //  backgroundColor: "#F0F8FF",
   },
 
   image: {

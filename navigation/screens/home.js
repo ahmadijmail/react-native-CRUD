@@ -8,97 +8,113 @@ import {
   Button,
   Text,
   RefreshControl,
-  ScrollView
+  ScrollView,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Ddialog from "./dialog";
-import { withTheme } from "react-native-elements";
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([]);
+  const isFocused = useIsFocused();
 
-  
   const getMovies = async () => {
     try {
       let response = await fetch("https://newauthh.herokuapp.com/api/products");
       const json = await response.json();
       setData(json);
-      console.log("caleddd");
+
     } catch (error) {
       console.error(error);
     }
   };
   const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-   
-    wait(2000).then(() => {setRefreshing(false),  getMovies()});
+
+    wait(2000).then(() => {
+      setRefreshing(false)
+      getMovies();
+    });
   }, []);
 
   const deletehandle = async (id) => {
-
-    try {
-      const response = await axios.delete(
-        `https://newauthh.herokuapp.com/api/products/${id}`
-      );
- 
-  
-      if (response) console.log("deleted");
-    } catch (response) {
-      console.log(response, "errrorr");
-    }
+    Alert.alert("Delet Product", "Are you sure you wanna delete?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          try {
+            const response = await axios.delete(
+              `https://newauthh.herokuapp.com/api/products/${id}`
+            );
+            getMovies()
+            if (response) alert("deleted");
+            
+          } catch (response) {
+            console.log(response, "errrorr");
+          }
+        },
+      },
+    ]);
   };
 
   useEffect(() => {
     getMovies();
-    console.log("hii");
-  }, [refreshing]);
+  }, [refreshing, isFocused]);
   return (
     <>
+      <View>
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={data}
+          keyExtractor={({ _id }, index) => _id}
+          renderItem={({ item }) => (
+            <View style={styles.container}>
+              <View style={styles.cardContainer}>
+                <Image style={styles.imageStyle} source={{ uri: item.image }} />
 
-        <ScrollView
-         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
-        >
-          <FlatList
-            data={data}
-            keyExtractor={({ _id }, index) => _id}
-            renderItem={({ item }) => (
-              <View style={styles.container}>
-                <View style={styles.cardContainer}>
-                  <Image
-                    style={styles.imageStyle}
-                    source={{ uri: item.image }}
-                  />
-
-                  <View style={styles.infoStyle}>
-                    <Text style={styles.titleStyle}>{item.name}</Text>
-                    <Text isTruncated maxW="300" w="80%">
-                      {item.description}
-                    </Text>
-
-                    <Button
-                      style={styles.button}
-                      title="Delete"
-                      onPress={() => deletehandle(item._id)}
-                    />
-
-                    <Ddialog item={item} />
-                  </View>
+                <View style={styles.infoStyle}>
+                  <Text style={styles.titleStyle}>{item.name}</Text>
+                  <Text isTruncated max="10" w="10%" numberOfLines={1}>
+                    {item.description}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "black",
+                      top: 30,
+                      left: 10,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item.price}$
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.button31}
+                    title="Delete"
+                    onPress={() => deletehandle(item._id)}
+                  >
+                    <Text style={{ color: "white" }}>Delete</Text>
+                  </TouchableOpacity>
+                  <Ddialog item={item} />
                 </View>
               </View>
-            )}
-          />
-        </ScrollView>
-
+            </View>
+          )}
+        />
+      </View>
     </>
   );
 }
@@ -115,17 +131,15 @@ const styles = StyleSheet.create({
 
     marginLeft: 10,
   },
-  button: {
-    alignItems: "center",
+  button31: {
+    width: 70,
+    height: "17%",
     justifyContent: "center",
-    marginLeft: "39%",
-    height: "28%",
     backgroundColor: "red",
-    color: "black",
-    width: "30%",
-    left: "70%",
-    bottom: "2%",
     borderRadius: 10,
+    alignItems: "center",
+    marginLeft: "55%",
+    bottom: "1%",
   },
 
   button2: {
@@ -146,7 +160,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: deviceWidth - offset,
     backgroundColor: "#FAFCFF",
-    height: 220,
+    height: 240,
 
     borderRadius: radius,
     shadowColor: "#000",
@@ -163,13 +177,14 @@ const styles = StyleSheet.create({
     width: deviceWidth - offset,
     borderTopLeftRadius: radius,
     borderTopRightRadius: radius,
-    opacity: 0.9,
+    opacity: 1,
     alignContent: "center",
     alignSelf: "center",
   },
   titleStyle: {
     fontSize: 20,
     fontWeight: "800",
+    // flex: 1
   },
   categoryStyle: {
     fontWeight: "200",
