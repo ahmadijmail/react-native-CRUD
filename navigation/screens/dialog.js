@@ -17,6 +17,7 @@ export default function Ddialog({ item }) {
   };
 
   const handelUpdate = async (item) => {
+
     try {
       const response = await axios.put(
         `https://newauthh.herokuapp.com/api/products/${items._id}`,
@@ -24,9 +25,10 @@ export default function Ddialog({ item }) {
           name: items.name,
           description: items.description,
           price: items.price,
-          image: image?image:items.name,
+          image: image?image:items.image,
         }
       );
+
       if (response) setVisible(false);
       alert("Updated Sucsessfully");
     } catch (response) {
@@ -80,7 +82,7 @@ export default function Ddialog({ item }) {
         </Dialog.Description>
         <Dialog.Button label="Cancel" onPress={handleCancel} />
 
-        <Dialog.Button label="Update" onPress={() => handelUpdate(items)} />
+        <Dialog.Button disabled={true} label="Update" onPress={() => handelUpdate(items)} />
       </Dialog.Container>
     </View>
   );

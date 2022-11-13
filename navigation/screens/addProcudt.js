@@ -12,7 +12,7 @@ import { useForm, Controller } from "react-hook-form";
 import ImagePickerExample from "./imageUploader";
 
 export default () => {
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
   const [isLoading, setloading] = useState(false);
   const {
     handleSubmit,
@@ -20,26 +20,21 @@ export default () => {
     formState: { errors },
   } = useForm({ defaultValues: { name: "", description: "", price: "" } });
   const onSubmit = async (data) => {
-    for (const [key, value] of Object.entries(data)) {
-   
-        try {
-          const response = await axios.post(
-            `https://newauthh.herokuapp.com/api/products`,
-            {
-              name: data.name,
-              description: data.description,
-              price: data.price,
-              image: image,
-            }
-          );
-    
-          if (response) alert("Succefully Added");
-        } catch (response) {
-          console.log(response, "errrorr");
+    try {
+      const response = await axios.post(
+        `https://newauthh.herokuapp.com/api/products`,
+        {
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          image: image,
         }
-      
+      );
+
+      if (response) alert("Succefully Added");
+    } catch (response) {
+      console.log(response, "errrorr");
     }
-   
   };
 
   const onChange = (arg) => {
@@ -71,7 +66,7 @@ export default () => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-          numberOfLines={3}
+            numberOfLines={3}
             style={styles.inputdes}
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
@@ -99,15 +94,12 @@ export default () => {
       />
 
       <View style={styles.imgbutton}>
-      <ImagePickerExample setImage={setImage} setloading={setloading} />
+        <ImagePickerExample setImage={setImage} setloading={setloading} />
       </View>
-     
-    
-  
-        <View style={styles.button}>
-          <Button color title="Submit"  onPress={handleSubmit(onSubmit)} />
-        </View>
-  
+
+      <View style={styles.button}>
+        <Button color title="Submit" onPress={handleSubmit(onSubmit)} />
+      </View>
     </ScrollView>
   );
 };
@@ -117,11 +109,10 @@ const styles = StyleSheet.create({
     color: "white",
     margin: 20,
     marginLeft: 0,
-
   },
   button: {
     height: 40,
-bottom:'10%',
+    bottom: "10%",
     borderRadius: 4,
     width: 200,
     marginLeft: "24%",
@@ -130,13 +121,13 @@ bottom:'10%',
     backgroundColor: "green",
   },
 
-inputdes:{
-  backgroundColor: "white",
-  borderColor: "none",
-  height: 80,
-  padding: 10,
-  borderRadius: 4,
-},
+  inputdes: {
+    backgroundColor: "white",
+    borderColor: "none",
+    height: 80,
+    padding: 10,
+    borderRadius: 4,
+  },
   container: {
     padding: 8,
     backgroundColor: "#272343",
@@ -154,8 +145,8 @@ inputdes:{
     borderColor: "none",
     height: 40,
     padding: 15,
-    width:100,
-    justifyContent:'center',
+    width: 100,
+    justifyContent: "center",
     borderRadius: 4,
   },
 
@@ -167,8 +158,8 @@ inputdes:{
     //justifyContent: "center",
   },
 
-  imgbutton:{
-    left:'40%',
-    bottom:'10%'
-  }
+  imgbutton: {
+    left: "40%",
+    bottom: "10%",
+  },
 });

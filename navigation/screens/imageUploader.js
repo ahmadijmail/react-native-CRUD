@@ -42,7 +42,6 @@ export default function ImagePickerExample({ setImage ,oldimage}) {
       setImage(json.url);
       setImages(json.url);
       setloading(false)
-      console.log(json.url);
     } catch (error) {
       console.error(error);
     }
