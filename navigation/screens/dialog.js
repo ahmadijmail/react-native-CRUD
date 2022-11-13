@@ -17,7 +17,7 @@ export default function Ddialog({ item }) {
   };
 
   const handelUpdate = async (item) => {
-
+///double check later on
     try {
       const response = await axios.put(
         `https://newauthh.herokuapp.com/api/products/${items._id}`,
