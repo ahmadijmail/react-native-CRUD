@@ -82,7 +82,7 @@ export default function Ddialog({ item }) {
         </Dialog.Description>
         <Dialog.Button label="Cancel" onPress={handleCancel} />
 
-        <Dialog.Button disabled={true} label="Update" onPress={() => handelUpdate(items)} />
+        <Dialog.Button  label="Update" onPress={() => handelUpdate(items)} />
       </Dialog.Container>
     </View>
   );

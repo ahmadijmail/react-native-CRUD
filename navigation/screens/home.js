@@ -13,11 +13,11 @@ import {
   Alert,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
-
+import BasicSlider from './cersual'
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Ddialog from "./dialog";
-export default function Home() {
+export default function Home({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([]);
   const isFocused = useIsFocused();
@@ -27,11 +27,11 @@ export default function Home() {
       let response = await fetch("https://newauthh.herokuapp.com/api/products");
       const json = await response.json();
       setData(json);
-
     } catch (error) {
       console.error(error);
     }
   };
+
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -39,7 +39,7 @@ export default function Home() {
     setRefreshing(true);
 
     wait(2000).then(() => {
-      setRefreshing(false)
+      setRefreshing(false);
       getMovies();
     });
   }, []);
@@ -58,9 +58,8 @@ export default function Home() {
             const response = await axios.delete(
               `https://newauthh.herokuapp.com/api/products/${id}`
             );
-            getMovies()
+            getMovies();
             if (response) alert("deleted");
-            
           } catch (response) {
             console.log(response, "errrorr");
           }
@@ -69,12 +68,22 @@ export default function Home() {
     ]);
   };
 
+  const handleNavigation = (nav, page, s) => {
+    try {
+      setSelected(s);
+      nav.navigate(page);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     getMovies();
   }, [refreshing, isFocused]);
   return (
     <>
+  
       <View>
+
         <FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -82,36 +91,43 @@ export default function Home() {
           data={data}
           keyExtractor={({ _id }, index) => _id}
           renderItem={({ item }) => (
-            <View style={styles.container}>
-              <View style={styles.cardContainer}>
-                <Image style={styles.imageStyle} source={{ uri: item.image }} />
+            <Pressable
+              onPress={() => navigation.navigate("OneProduct", { item })}
+            >
+              <View style={styles.container}>
+                <View style={styles.cardContainer}>
+                  <Image
+                    style={styles.imageStyle}
+                    source={{ uri: item.image }}
+                  />
 
-                <View style={styles.infoStyle}>
-                  <Text style={styles.titleStyle}>{item.name}</Text>
-                  <Text isTruncated max="10" w="10%" numberOfLines={1}>
-                    {item.description}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "black",
-                      top: 30,
-                      left: 10,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {item.price}$
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.button31}
-                    title="Delete"
-                    onPress={() => deletehandle(item._id)}
-                  >
-                    <Text style={{ color: "white" }}>Delete</Text>
-                  </TouchableOpacity>
-                  <Ddialog item={item} />
+                  <View style={styles.infoStyle}>
+                    <Text style={styles.titleStyle}>{item.name}</Text>
+                    <Text isTruncated max="10" w="10%" numberOfLines={1}>
+                      {item.description}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "black",
+                        top: 30,
+                        left: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {item.price}$
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.button31}
+                      title="Delete"
+                      onPress={() => deletehandle(item._id)}
+                    >
+                      <Text style={{ color: "white" }}>Delete</Text>
+                    </TouchableOpacity>
+                    <Ddialog item={item} />
+                  </View>
                 </View>
               </View>
-            </View>
+            </Pressable>
           )}
         />
       </View>
