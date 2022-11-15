@@ -43,7 +43,7 @@ const OneProduct = ({ route, navigation }) => {
           <Text style={{ top: 23, left: "2%" }}>SAR </Text>
           <Text style={styles.price}> {item.price} </Text>
           <View style={styles.copon}>
-            <Text>Extra 10%</Text>
+            <Text style={{color:"#7FFF00"}}>Extra 10%: SAVEMONY</Text>
           </View>
 
           <Text style={styles.description}>
@@ -77,12 +77,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   copon: {
+    marginTop:"5%",
     borderWidth: 2,
     borderColor: "#7FFF00",
     borderStyle: "dashed",
     padding:20,
  maxWidth:"90%",
-
+ left:20,
+marginBottom:"5%"
   },
   brandbutton: {
     width: 90,
