@@ -13,24 +13,17 @@ import {
   Alert,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
-import BasicSlider from './cersual'
+import { useSelector, useDispatch } from "react-redux";
+import { productsFetch, deleteProduct } from "../../store/productsSlice";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Ddialog from "./dialog";
 export default function Home({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const isFocused = useIsFocused();
-
-  const getMovies = async () => {
-    try {
-      let response = await fetch("https://newauthh.herokuapp.com/api/products");
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const dispatch = useDispatch();
+  const data = useSelector((data) => data.products.items);
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -40,7 +33,6 @@ export default function Home({ navigation }) {
 
     wait(2000).then(() => {
       setRefreshing(false);
-      getMovies();
     });
   }, []);
 
@@ -51,20 +43,7 @@ export default function Home({ navigation }) {
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      {
-        text: "OK",
-        onPress: async () => {
-          try {
-            const response = await axios.delete(
-              `https://newauthh.herokuapp.com/api/products/${id}`
-            );
-            getMovies();
-            if (response) alert("deleted");
-          } catch (response) {
-            console.log(response, "errrorr");
-          }
-        },
-      },
+      { text: "OK", onPress: () => dispatch(deleteProduct(id)) },
     ]);
   };
 
@@ -77,13 +56,12 @@ export default function Home({ navigation }) {
     }
   };
   useEffect(() => {
-    getMovies();
+    dispatch(productsFetch());
+
   }, [refreshing, isFocused]);
   return (
     <>
-  
-      <View>
-
+      <View style={{ width: "100%", height: "100%" }}>
         <FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

@@ -21,7 +21,7 @@ function CustomHeader({ navigation }) {
   };
   useEffect(() => {
     handelroutes();
-   // console.log(routeName);
+
   }, [navigation.getState()]);
   return (
     <>
@@ -46,18 +46,19 @@ export default CustomHeader;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    height: 90,
+    height: 80,
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    backgroundColor:'white'
   },
   headerTitle: {
     color: "#000",
