@@ -74,6 +74,7 @@ export default BasicSlider = () => {
 
           return (
             <Animated.View
+            key={imageIndex}
               style={[
                 styles.normalDots,
                 { width },
@@ -82,6 +83,7 @@ export default BasicSlider = () => {
             />
           );
         })}
+      
       </View>
     </SafeAreaView>
   );

@@ -21,22 +21,27 @@ function CustomHeader({ navigation }) {
   };
   useEffect(() => {
     handelroutes();
-   // console.log(routeName);
+
   }, [navigation.getState()]);
   return (
     <>
+
       <View style={styles.container} bg="muted.50">
-        {routeName !== "home" && (
-          <Ionicons
-            onPress={handleNavigate}
-            name={Platform.OS === "ios" ? `ios-arrow-back` : "md-arrow-back"}
-            size={30}
-            color="black"
-            style={styles.head}
-          />
-        )}
+        {routeName === "OneProduct" &&
+          (
+            <Ionicons
+              onPress={handleNavigate}
+              name={Platform.OS === "ios" ? `ios-arrow-back` : "md-arrow-back"}
+              size={30}
+              color="black"
+              style={styles.head}
+            />
+            //
+          )
+        }
         <Heading color="#194569" fontSize="20" fontWeight="bold"></Heading>
       </View>
+
     </>
   );
 }
@@ -46,18 +51,19 @@ export default CustomHeader;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    height: 90,
+    height: 80,
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    backgroundColor: 'white'
   },
   headerTitle: {
     color: "#000",

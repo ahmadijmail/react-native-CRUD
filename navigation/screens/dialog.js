@@ -1,13 +1,23 @@
-import React, { useState } from "react";
-import { Button, StyleSheet, View, Image, Pressable,Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, View, Image, Pressable, Text } from "react-native";
 import Dialog from "react-native-dialog";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { editProduct } from "../../store/productsSlice";
 import ImagePickerExample from "./imageUploader";
 export default function Ddialog({ item }) {
   const [items, setItems] = useState(item);
+  const [updatedItems, setupdatedItems] = useState({
+    name: items.name,
+    description: items.description,
+    price: items.price,
+    image: image ? image : items.image,
+    itemid: items._id,
+  });
   const [image, setImage] = useState();
-  const [visible, setVisible] = useState(false);
 
+  const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
   const update = () => {
     setVisible(true);
   };
@@ -16,29 +26,25 @@ export default function Ddialog({ item }) {
     setVisible(false);
   };
 
-  const handelUpdate = async (item) => {
-///double check later on
-    try {
-      const response = await axios.put(
-        `https://newauthh.herokuapp.com/api/products/${items._id}`,
-        {
-          name: items.name,
-          description: items.description,
-          price: items.price,
-          image: image?image:items.image,
-        }
-      );
+  const handelUpdate = async (items) => {
+    dispatch(
+      editProduct({
+        name: updatedItems.name,
+        description: updatedItems.description,
+        price: updatedItems.price,
+        image: image ? image : updatedItems.image,
+        itemid: items._id,
+      })
+    );
+    setVisible(false);
 
-      if (response) setVisible(false);
-      alert("Updated Sucsessfully");
-    } catch (response) {
-      console.log(response, "errrorr");
-    }
   };
+
+
 
   return (
     <View style={styles.container}>
-      <Pressable  style={styles.buttonup} onPress={update} >
+      <Pressable style={styles.buttonup} onPress={update}>
         <Text style={{ color: "white" }}>Update</Text>
       </Pressable>
       <Dialog.Container visible={visible}>
@@ -47,32 +53,24 @@ export default function Ddialog({ item }) {
           label="Name"
           defaultValue={items.name}
           onChangeText={(text) => {
-            items.name = text;
+            updatedItems.name = text;
           }}
         ></Dialog.Input>
         <Dialog.Input
           label="Description"
           defaultValue={items.description}
           onChangeText={(text) => {
-            items.description = text;
+            updatedItems.description = text;
           }}
         ></Dialog.Input>
         <Dialog.Input
           label="Price"
           defaultValue={JSON.stringify(items.price)}
           onChangeText={(text) => {
-            items.price = text;
+            updatedItems.price = text;
           }}
         ></Dialog.Input>
-        {/* <Dialog.Input
-          label="Image"
-          defaultValue={items.image}
-          onChangeText={(text) => {
-            items.image = image;
-          }}
-        ></Dialog.Input> */}
 
-       
         <View style={styles.imgg}>
           <ImagePickerExample setImage={setImage} oldimage={items.image} />
         </View>
@@ -82,7 +80,7 @@ export default function Ddialog({ item }) {
         </Dialog.Description>
         <Dialog.Button label="Cancel" onPress={handleCancel} />
 
-        <Dialog.Button  label="Update" onPress={() => handelUpdate(items)} />
+        <Dialog.Button label="Update" onPress={() => handelUpdate(items)} />
       </Dialog.Container>
     </View>
   );
@@ -92,10 +90,10 @@ const styles = StyleSheet.create({
   container: {
     //  flex: 1,
     // backgroundColor: "blue",
-   // color: "white",
+    // color: "white",
     //width: "30%",
     //left: "70%",
-   // bottom: "30%",
+    // bottom: "30%",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -105,14 +103,14 @@ const styles = StyleSheet.create({
     marginLeft: "20%",
   },
 
-  buttonup:{
+  buttonup: {
     width: 70,
     height: "41%",
-    justifyContent:'center',
+    justifyContent: "center",
     backgroundColor: "black",
     borderRadius: 10,
     alignItems: "center",
     marginLeft: "77%",
     bottom: "73%",
-  }
+  },
 });

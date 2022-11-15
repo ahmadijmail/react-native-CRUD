@@ -8,55 +8,65 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { color } from "react-native-reanimated";
+import { Foundation } from "@expo/vector-icons";
 import BasicSlider from "./cersual";
+import ItemTabs from "./ItemTabs";
+
 const OneProduct = ({ route, navigation }) => {
   const { item, otherParam } = route.params;
-  console.log(item);
-  return (
-    <>
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <TouchableOpacity style={styles.brandbutton}>
-            <Text style={styles.brandtex}>Apple</Text>
-          </TouchableOpacity>
-          <Text style={styles.titleStyle}>{item.name}</Text>
-          <TouchableOpacity style={styles.sellerbutton}>
-            <Text style={styles.selltex}>Best Seller</Text>
-          </TouchableOpacity>
-          {/* <Image style={styles.imageStyle} source={{ uri: item.image }}></Image> */}
 
-          <View style={styles.imageStyle}>
-            <BasicSlider />
-          </View>
-          <View>
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <TouchableOpacity style={styles.brandbutton}>
+          <Text style={styles.brandtex}>Apple</Text>
+        </TouchableOpacity>
+        <Text style={styles.titleStyle}>{item.name}</Text>
+        <TouchableOpacity style={styles.sellerbutton}>
+          <Text style={styles.selltex}>Best Seller</Text>
+        </TouchableOpacity>
+        <View style={styles.imageStyle}>
+          <BasicSlider />
+        </View>
+        <Text style={{ top: 50, left: 20 }}>SAR </Text>
+        <View style={styles.slide}>
+
+        <Text style={styles.price}>
+          {item.price}
+          </Text>
             <Image
               style={{
-                width: win.width / 5,
+                width: win.width / 4,
                 height: win.width / 9,
-                top: 46,
-                left: "70%",
+                // top: 10,
+                marginLeft: 200,
+               // bottom: 30,
               }}
               source={require("../../assets/aramex-logo-vector.png")}
             ></Image>
-          </View>
-          <Text style={{ top: 23, left: "2%" }}>SAR </Text>
-          <Text style={styles.price}> {item.price} </Text>
-          <View style={styles.copon}>
-            <Text style={{color:"#7FFF00"}}>Extra 10%: SAVEMONY</Text>
-          </View>
+         
+        
+        </View>
 
-          <Text style={styles.description}>
-            In any business environment, partnerships between organizations are
-            common for lead referral sharing, co-sponsored marketing
-            initiatives, and joint product or service distribution. Developing
-            these relationships often starts by sending a business introduction
-            email to request a conference call or meeting for further
-            discussion.
+        <View style={styles.copon}>
+          <Text
+            style={{ color: "#32CD32", bottom: "5%", left: "5%" }}
+            icon={{ name: "heart", type: "ionicon", color: "black" }}
+          >
+            Extra 10% : SAVEBIG
+            <View>
+              <Foundation
+                name="ticket"
+                size={35}
+                color="#32CD32"
+                style={{ left: 120, top: "35%" }}
+              />
+            </View>
           </Text>
-        </ScrollView>
-      </View>
-    </>
+        </View>
+        <ItemTabs />
+      </ScrollView>
+    </View>
   );
 };
 
@@ -66,7 +76,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-  
   },
 
   brandtex: {
@@ -81,10 +90,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#7FFF00",
     borderStyle: "dashed",
-    padding:20,
- maxWidth:"90%",
- left:20,
-marginBottom:"5%"
+    maxWidth: "90%",
+    left: "5%",
+    minHeight: 60,
+    marginBottom: "3%",
+    marginTop: "2%",
   },
   brandbutton: {
     width: 90,
@@ -103,10 +113,19 @@ marginBottom:"5%"
     backgroundColor: "#373737",
     alignItems: "center",
   },
+
+  slide:{
+    flex: 1,
+    flexDirection: "row",
+    top:10,
+    left:10
+  },
   price: {
-    fontSize: 25,
+ 
+    fontSize: 30,
     fontWeight: "bold",
-    left: "9%",
+    left: 50,
+     top: 2 ,
   },
   titleStyle: {
     marginTop: "5%",
