@@ -27,7 +27,7 @@ function CustomHeader({ navigation }) {
     <>
 
       <View style={styles.container} bg="muted.50">
-        {routeName === "OneProduct" &&
+        {routeName === "OneProduct" || routeName === "addProcudt"  &&
           (
             <Ionicons
               onPress={handleNavigate}

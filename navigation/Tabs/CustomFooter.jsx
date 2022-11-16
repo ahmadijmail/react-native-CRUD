@@ -52,16 +52,16 @@ const CustomFooter = ({ navigation }) => {
           opacity={selected === 2 ? 1 : 0.5}
           py="2"
           flex={1}
-          onPress={() => handleNavigation(navigation, "addProcudt", 2)}
+          onPress={() => handleNavigation(navigation, "Cart", 2)}
         >
           <Center>
             <Ionicons
-              name="receipt-outline"
+              name="cart-outline"
               size={24}
               color={selected === 2 ? "#02416D" : "#000"}
             />
             <Text color="#194569" fontSize="12">
-              Add Product
+              Cart
             </Text>
           </Center>
         </Pressable>

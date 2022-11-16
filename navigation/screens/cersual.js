@@ -74,7 +74,7 @@ export default BasicSlider = () => {
 
           return (
             <Animated.View
-            key={imageIndex}
+              key={imageIndex}
               style={[
                 styles.normalDots,
                 { width },
@@ -83,7 +83,6 @@ export default BasicSlider = () => {
             />
           );
         })}
-      
       </View>
     </SafeAreaView>
   );
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     marginVertical: 10,
-borderRadius:10,
+    borderRadius: 10,
     width: "70%",
 
     overflow: "hidden",

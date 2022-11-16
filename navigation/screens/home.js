@@ -5,10 +5,8 @@ import {
   Image,
   FlatList,
   Pressable,
-  Button,
   Text,
   RefreshControl,
-  ScrollView,
   TouchableOpacity,
   Alert,
 } from "react-native";
@@ -16,11 +14,10 @@ import { useIsFocused } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { productsFetch, deleteProduct } from "../../store/productsSlice";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import AddButton from "./AddButton";
 import Ddialog from "./dialog";
 export default function Home({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
-  // const [data, setData] = useState([]);
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const data = useSelector((data) => data.products.items);
@@ -57,7 +54,6 @@ export default function Home({ navigation }) {
   };
   useEffect(() => {
     dispatch(productsFetch());
-
   }, [refreshing, isFocused]);
   return (
     <>
@@ -108,6 +104,7 @@ export default function Home({ navigation }) {
             </Pressable>
           )}
         />
+        <AddButton navigation={navigation} />
       </View>
     </>
   );

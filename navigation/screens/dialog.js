@@ -8,11 +8,11 @@ import ImagePickerExample from "./imageUploader";
 export default function Ddialog({ item }) {
   const [items, setItems] = useState(item);
   const [updatedItems, setupdatedItems] = useState({
-    name: items.name,
-    description: items.description,
-    price: items.price,
-    image: image ? image : items.image,
-    itemid: items._id,
+    name: items?.name,
+    description: items?.description,
+    price: items?.price,
+    image: image ? image : items?.image,
+    itemid: items?._id,
   });
   const [image, setImage] = useState();
 
@@ -51,14 +51,14 @@ export default function Ddialog({ item }) {
         <Dialog.Title>Update Product</Dialog.Title>
         <Dialog.Input
           label="Name"
-          defaultValue={items.name}
+          defaultValue={items?.name}
           onChangeText={(text) => {
-            updatedItems.name = text;
+            updatedItems.name =text
           }}
         ></Dialog.Input>
         <Dialog.Input
           label="Description"
-          defaultValue={items.description}
+          defaultValue={items?.description}
           onChangeText={(text) => {
             updatedItems.description = text;
           }}
@@ -72,7 +72,7 @@ export default function Ddialog({ item }) {
         ></Dialog.Input>
 
         <View style={styles.imgg}>
-          <ImagePickerExample setImage={setImage} oldimage={items.image} />
+          <ImagePickerExample setImage={setImage} oldimage={items?.image} />
         </View>
 
         <Dialog.Description>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     //left: "70%",
     // bottom: "30%",
     borderRadius: 10,
-    alignItems: "center",
+   // alignItems: "center",
     justifyContent: "center",
   },
 

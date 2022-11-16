@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Button, Image, View, Platform, StyleSheet,ActivityIndicator } from "react-native";
+import {
+  Button,
+  Image,
+  View,
+  Platform,
+  StyleSheet,
+  ActivityIndicator,
+  Pressable,
+  Text,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-export default function ImagePickerExample({ setImage ,oldimage}) {
-  const [imgggg, setimgg]=useState(oldimage)
+import { FontAwesome5 } from "@expo/vector-icons";
+
+export default function ImagePickerExample({ setImage, oldimage }) {
+  const [imgggg, setimgg] = useState(oldimage);
   const [image, setImages] = useState();
   const [isLoading, setloading] = useState(false);
   const pickImage = async () => {
@@ -21,12 +32,11 @@ export default function ImagePickerExample({ setImage ,oldimage}) {
       };
 
       handelupload(newfule);
-
     }
   };
   const handelupload = async (image) => {
     const data = new FormData();
-    setloading(true)
+    setloading(true);
     data.append("file", image);
     data.append("upload_preset", "mobphotos");
     data.append("cloud_name", "daah9umqu");
@@ -41,7 +51,7 @@ export default function ImagePickerExample({ setImage ,oldimage}) {
       const json = await response.json();
       setImage(json.url);
       setImages(json.url);
-      setloading(false)
+      setloading(false);
     } catch (error) {
       console.error(error);
     }
@@ -49,17 +59,21 @@ export default function ImagePickerExample({ setImage ,oldimage}) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.button}>
-        <Button
-          style={styles.buttonInner}
-          //color="#000000"
-          title="Upload Image"
-          onPress={pickImage}
+      <Pressable style={styles.button} onPress={pickImage}>
+        <Text>
+          Upload Image
+          {"  "}
+        </Text>
+        <FontAwesome5 name="image" size={25} />
+      </Pressable>
+
+      {isLoading && <ActivityIndicator size="large" style={{ }} />}
+      {imgggg && (
+        <Image
+          source={image ? { uri: image } : { uri: imgggg }}
+          style={styles.image}
         />
-      </View>
-   
-      {isLoading&& <ActivityIndicator size="large"  style={{right:'65%'}}/>}
-      {imgggg && <Image source={image?{uri:image}: {uri:imgggg}} style={styles.image} />}
+      )}
     </View>
   );
 }
@@ -67,25 +81,29 @@ export default function ImagePickerExample({ setImage ,oldimage}) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    padding: 70,
+    padding: 50,
+    alignContent: "center",
+    backgroundColor: "white",
+    // width: "100%",
+    // height: "100%",
   },
 
   button: {
-    height: 40,
-    borderRadius: 4,
+    height: 60,
+    borderRadius: 10,
     width: 150,
-    right: 70,
     bottom: 50,
-    //color:'black',
-  //  backgroundColor: "#F0F8FF",
+    left: 60,
+    borderWidth: 1,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#e1e0dd",
   },
 
   image: {
-    //marginLeft: "50%",
     width: 200,
-    right:90,
     height: 100,
     borderRadius: 10,
-   // bottom: 40,
   },
 });

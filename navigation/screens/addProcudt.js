@@ -7,13 +7,22 @@ import {
   View,
   ScrollView,
   Button,
+  Pressable,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import ImagePickerExample from "./imageUploader";
+import { SelectList } from "react-native-dropdown-select-list";
 
 export default () => {
   const [image, setImage] = useState("");
   const [isLoading, setloading] = useState(false);
+  const [selected, setSelected] = React.useState([]);
+
+  const data = [
+    { key: "1", value: "Mobiles", disabled: true },
+    { key: "2", value: "Appliances" },
+    { key: "3", value: "Laptop" },
+  ]
   const {
     handleSubmit,
     control,
@@ -46,7 +55,10 @@ export default () => {
     <ScrollView style={styles.container}>
       <Text style={styles.maintt}>Add Product</Text>
 
-      <Text style={styles.label}>Name</Text>
+      <Text style={styles.label}>
+        Name
+        <Text style={{ color: "red" }}> *</Text>
+      </Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -61,7 +73,10 @@ export default () => {
         rules={{ required: true }}
       />
 
-      <Text style={styles.label}>Description</Text>
+      <Text style={styles.label}>
+        Description
+        <Text style={{ color: "red" }}> *</Text>
+      </Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -76,82 +91,102 @@ export default () => {
         name="description"
         rules={{ required: true }}
       />
-
-      <Text style={styles.label}>Price</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            keyboardType="numeric"
-            style={styles.inputPrice}
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            value={value}
-          />
-        )}
-        name="price"
-        rules={{ required: true }}
-      />
-
-      <View style={styles.imgbutton}>
-        <ImagePickerExample setImage={setImage} setloading={setloading} />
+      <View>
+        <Text style={styles.label}>
+          Price
+          <Text style={{ color: "red" }}> *</Text>
+        </Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              keyboardType="numeric"
+              style={styles.inputPrice}
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+            />
+          )}
+          name="price"
+          rules={{ required: true }}
+        />
+        <SelectList
+          setSelected={(val) => setSelected(val)}
+          data={data}
+          boxStyles={{ width: 200, left: 170, bottom: 50, height: 50, alignItems:'center' }}
+          dropdownStyles={{
+            width: 200,
+            left: 170,
+            bottom: 55,
+            position: "relative",
+          }}
+          save="value"
+        />
+        <View style={styles.imgbutton}>
+          <ImagePickerExample setImage={setImage} setloading={setloading} />
+        </View>
       </View>
-
-      <View style={styles.button}>
-        <Button color title="Submit" onPress={handleSubmit(onSubmit)} />
-      </View>
+      <Pressable onPress={handleSubmit(onSubmit)} style={styles.button}>
+        <Text style={{ color: "white" }}>Submit</Text>
+      </Pressable>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   label: {
-    color: "white",
-    margin: 20,
-    marginLeft: 0,
+    color: "black",
+    marginTop: 20,
+    marginBottom: 20,
   },
   button: {
     height: 40,
-    bottom: "10%",
-    borderRadius: 4,
-    width: 200,
-    marginLeft: "24%",
+    bottom: "5%",
+    borderRadius: 10,
+    width: "100%",
+    backgroundColor: "#4681f4",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "green",
   },
 
   inputdes: {
     backgroundColor: "white",
-    borderColor: "none",
     height: 80,
     padding: 10,
-    borderRadius: 4,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: "black",
   },
   container: {
     padding: 8,
-    backgroundColor: "#272343",
+    // flex:1
+    position: "relative",
+    backgroundColor: "white",
   },
   input: {
     backgroundColor: "white",
-    borderColor: "none",
-    height: 40,
+    //  borderColor: "none",
+    //height: 40,
     padding: 10,
-    borderRadius: 4,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: "black",
   },
 
   inputPrice: {
     backgroundColor: "white",
-    borderColor: "none",
-    height: 40,
+    // borderColor: "none",
+     height: 50,
     padding: 15,
-    width: 100,
+    width: 140,
+    borderColor: "black",
     justifyContent: "center",
-    borderRadius: 4,
+    borderWidth: 0.5,
+    borderRadius: 10,
   },
 
   maintt: {
-    color: "white",
+    color: "black",
     fontSize: 40,
     top: 20,
     marginBottom: 30,
@@ -159,7 +194,7 @@ const styles = StyleSheet.create({
   },
 
   imgbutton: {
-    left: "40%",
-    bottom: "10%",
+    // left: "40%",
+    // bottom: "10%",
   },
 });
