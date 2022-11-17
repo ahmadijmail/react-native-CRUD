@@ -51,7 +51,7 @@ export default CustomHeader;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    height: 80,
+    height: 70,
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",

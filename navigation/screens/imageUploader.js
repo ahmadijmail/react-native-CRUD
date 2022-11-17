@@ -22,6 +22,7 @@ export default function ImagePickerExample({ setImage, oldimage }) {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      allowsMultipleSelection:true
     });
 
     if (result.cancelled === false) {

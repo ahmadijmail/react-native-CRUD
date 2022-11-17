@@ -15,7 +15,7 @@ import {
 import { useIsFocused } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { productsFetch, deleteProduct } from "../../store/productsSlice";
-import {cartActions} from "../../store/cartSlice"
+import { cartActions } from "../../store/cartSlice";
 import React, { useState, useEffect } from "react";
 
 export default function Cart({ navigation }) {
@@ -36,12 +36,12 @@ export default function Cart({ navigation }) {
   }, []);
   const removeFromCart = (item) => {
     //console.log((Dispatch(addtoCart)));
-    dispatch(cartActions.removefromCart(item))
+    dispatch(cartActions.removefromCart(item));
     console.log("eeeee");
   };
   const AddToCart = (item) => {
     //console.log((Dispatch(addtoCart)));
-    dispatch(cartActions.addtoCart(item))
+    dispatch(cartActions.addtoCart(item));
     console.log("eeeee");
   };
   const handleNavigation = (nav, page, s) => {
@@ -79,13 +79,13 @@ export default function Cart({ navigation }) {
                   />
                   <View style={styles.buttons}>
                     <TouchableOpacity
-                      onPress={() => buttonHandler("first")}
+                      onPress={() => {}}
                       style={styles.selectedbutton}
                     >
                       <Text style={{ fontSize: 10 }}>Red</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() => buttonHandler("first")}
+                      onPress={() => {}}
                       style={styles.selectedbutton}
                     >
                       <Text style={{ fontSize: 10 }}>128GB</Text>
@@ -95,17 +95,26 @@ export default function Cart({ navigation }) {
                   <View style={styles.buttons2}>
                     <TouchableOpacity
                       onPress={() => removeFromCart(item)}
-                      style={styles.selectedbutton2}
+                      style={styles.removeButton}
                     >
-                      <Text style={{ fontSize: 10 }}>-</Text>
+                      <Text
+                        style={{
+                          fontSize: 25,
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        -
+                      </Text>
                     </TouchableOpacity>
                     <Text
                       style={{
-                        fontSize: 20,
+                        fontSize: 23,
                         color: "black",
                         fontWeight: "bold",
-                        height: 25,
+                        height: 35,
                         right: 3,
+                        padding: 3,
                       }}
                     >
                       {item.productquantity}
@@ -115,31 +124,35 @@ export default function Cart({ navigation }) {
                       onPress={() => AddToCart(item)}
                       style={styles.selectedbutton2}
                     >
-                      <Text style={{ fontSize: 10 }}>+</Text>
+                      <Text
+                        style={{
+                          fontSize: 25,
+                          color: "black",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        +
+                      </Text>
                     </TouchableOpacity>
                   </View>
 
                   <Text
                     style={{
-                      color: "black",
-                      left: "85%",
+                      color: "#82ceff",
+                      width: 100,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      fontSize: 20,
                       fontWeight: "bold",
-                      fontSize: 15,
+                      marginRight: 12,
+                      height: 30,
+                      left: 130,
                       bottom: 20,
-                      //height: 40,
+                      position:'absolute'
                     }}
                   >
-                    {item.price}$
+                    $ {item.price}
                   </Text>
-
-                  {/* <TouchableOpacity
-                        style={styles.button31}
-                        title="Delete"
-                        onPress={() => deletehandle(item._id)}
-                      >
-                        <Text style={{ color: "white" }}>Delete</Text>
-                      </TouchableOpacity> */}
-                  {/* <Ddialog item={item} /> */}
                 </View>
               </View>
             </Pressable>
@@ -149,22 +162,36 @@ export default function Cart({ navigation }) {
           <View
             style={{
               flexDirection: "row",
-              borderTopWidth: 0.7,
+              borderTopWidth: 1,
               marginBottom: 5,
               borderTopEndRadius: 10,
               backgroundColor: "#FAFCFF",
+              height: 50,
+              width: "100%",
             }}
           >
-            <Text style={{ fontSize: 25, left: 10 }}>SUBTOTAL</Text>
-            <Text style={{ fontSize: 30, left: "400%", color: "#82ceff" }}>
-              {prices}.00
+            <Text style={{ fontSize: 20, left: 10, top: 15 }}>Total :</Text>
+            <Text
+              style={{
+                fontSize: 27,
+                left: "17%",
+              //  padding: 5,
+                color: "#82ceff",
+                top: 10,
+                position: "absolute",
+                fontWeight: "bold",
+              }}
+            >
+              {prices}.00 $
             </Text>
+            <Pressable style={styles.CheckOutButton}>
+              <Text
+                style={{ fontSize: 15, fontWeight: "bold", color: "white" }}
+              >
+                Checkout
+              </Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.CheckOutButton}>
-            <Text style={{ fontSize: 20, color: "white" }}>
-              Proceed To Checkout
-            </Text>
-          </Pressable>
         </View>
       </View>
     </>
@@ -202,23 +229,33 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     width: "30%",
-    left: "180%",
-    bottom: "15%",
+    // left: "170%",
+    left:260,
+    bottom: "6%",
+  },
+
+  removeButton: {
+    borderRadius: 50,
+    width: 40,
+    height: 40,
+    backgroundColor: "#f4f0ec",
+    marginRight: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "black",
+  
   },
 
   selectedbutton2: {
-    borderRadius: 35,
-    borderColor: "black",
-    color: "blue",
-    //borderWidth: 1,
-    width: 35,
+    borderRadius: 50,
+    width: 40,
+    height: 40,
+    backgroundColor: "#f4f0ec",
+    marginRight: 5,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e1e0dd",
-    marginRight: 5,
-    height: 35,
-    // left: 100,
-    // bottom: 80,
+    borderColor: "black",
+   // borderWidth: 1,
   },
   selectedbutton: {
     borderRadius: 5,
@@ -228,7 +265,7 @@ const styles = StyleSheet.create({
     width: 45,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e1e0dd",
+    backgroundColor: "#f4f0ec",
     marginRight: 12,
     height: 25,
     left: 110,
@@ -236,19 +273,20 @@ const styles = StyleSheet.create({
   },
 
   CheckOutButton: {
-    borderRadius: 25,
+    borderRadius: 7,
     borderColor: "black",
     color: "blue",
     borderWidth: 1,
-    width: 230,
+    width: 150,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#82ceff",
     //marginRight: 5,
     height: 50,
-
-    left: 80,
-    bottom: 3,
+    left: "380%",
+    top: 2,
+    // left: 80,
+    // bottom: 1,
     //bottom: 70,
   },
   button31: {
