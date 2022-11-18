@@ -22,10 +22,11 @@ export default function ImagePickerExample({ setImage, oldimage }) {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-      allowsMultipleSelection:true
+    //  allowsMultipleSelection:true
     });
 
     if (result.cancelled === false) {
+      console.log(result);
       let newfule = {
         uri: result.uri,
         type: `test/${result.uri.split(".")[1]}`,
@@ -52,6 +53,7 @@ export default function ImagePickerExample({ setImage, oldimage }) {
       const json = await response.json();
       setImage(json.url);
       setImages(json.url);
+      console.log(json.url);
       setloading(false);
     } catch (error) {
       console.error(error);
@@ -64,7 +66,7 @@ export default function ImagePickerExample({ setImage, oldimage }) {
         <Text>
           Upload Image
           {"  "}
-        </Text>
+        </Text> 
         <FontAwesome5 name="image" size={25} />
       </Pressable>
 
